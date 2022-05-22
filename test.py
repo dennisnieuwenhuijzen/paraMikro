@@ -1,5 +1,6 @@
 import paramiko
 import re
+import time
 
 def sshTest(cmd):
     ssh_client = paramiko.SSHClient()
@@ -15,12 +16,16 @@ def sshTest(cmd):
 
     return out
 
-r = sshTest('/ip/firewall/filter/print detail without-paging')
-for i in r.splitlines():
-    if re.match(r'.*iphone13pro youtube.*',i):
-        lineNumber = re.sub(r'^ (\d*) .*',r'\1',i)
 
-r = sshTest('/ip/firewall/filter/print stats')
-for i in r.splitlines():
-    if re.match(r'^ ' + lineNumber + r' .*',i):
-        print(i)
+while True:
+    r = sshTest('/ip/firewall/filter/print detail without-paging')
+    for i in r.splitlines():
+        if re.match(r'.*iphone13pro youtube.*',i):
+            lineNumber = re.sub(r'^ (\d*) .*',r'\1',i)
+
+    r = sshTest('/ip/firewall/filter/print stats')
+    for i in r.splitlines():
+        if re.match(r'^ ' + lineNumber + r' .*',i):
+            print(i)
+    
+    time.sleep(3)
