@@ -18,8 +18,9 @@ def sshTest(cmd):
 r = sshTest('/ip/firewall/filter/print detail without-paging')
 for i in r.splitlines():
     if re.match(r'.*iphone13pro youtube.*',i):
-        print(i)
         lineNumber = re.sub(r'^ (\d*) .*',r'\1',i)
 
-print(lineNumber)
-print(sshTest('/ip/firewall/filter/print stats'))
+r = sshTest('/ip/firewall/filter/print stats')
+for i in r.splitlines():
+    if re.match(r'^ ' + lineNumber + r' .*',i):
+        print(i)
