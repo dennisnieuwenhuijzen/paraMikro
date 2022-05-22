@@ -4,7 +4,7 @@ import re
 def sshTest(cmd):
     ssh_client = paramiko.SSHClient()
     ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh_client.connect(hostname='172.19.12.1', username='dennis',password='aqG87w2m')
+    ssh_client.connect(hostname='172.19.12.1', username='dennis',password='aqG87w2m',look_for_keys=False)
     stdin, stdout, stderr = ssh_client.exec_command(cmd)
 
     out = stdout.read().decode().strip()
